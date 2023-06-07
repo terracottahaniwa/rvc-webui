@@ -373,7 +373,7 @@ class Training(Tab):
                         )
                         cache_batch = gr.Checkbox(label="Cache batch", value=True)
                         fp16 = gr.Checkbox(
-                            label="FP16", value=half_support, disabled=not half_support
+                            label="FP16", value=half_support, interactive=half_support
                         )
                     with gr.Row().style(equal_height=False):
                         augment = gr.Checkbox(label="Augment", value=False)
