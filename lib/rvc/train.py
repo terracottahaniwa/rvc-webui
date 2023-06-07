@@ -252,6 +252,7 @@ def train_index(
             os.path.join(feature_256_spk_dir, file)
             for file in os.listdir(feature_256_spk_dir)
             if file.endswith(".npy")
+            and file != "mute.npy"
         ]:
             phone = np.load(os.path.join(feature_256_spk_dir, name))
             npys.append(phone)
@@ -271,6 +272,10 @@ def train_index(
             )
             kmeans.fit(big_npy)
             big_npy = kmeans.cluster_centers_
+
+        # load mute.npy after applying the k-means algorithm
+        mute_npy = np.load(os.path.join(feature_256_spk_dir, "mute.npy"))
+        big_npy = np.concatenate([big_npy, mute_npy], 0)
 
         # recommend parameter in https://github.com/facebookresearch/faiss/wiki/Guidelines-to-choose-an-index
         emb_ch = big_npy.shape[1]
